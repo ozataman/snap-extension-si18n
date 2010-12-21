@@ -1,0 +1,36 @@
+Name:                snap-extension-si18n
+Version:             0.1
+Synopsis:            Simple I18n framework for Snap
+Homepage:            https://github.com/ozataman/snap-extension-si18n
+License:             BSD3
+License-file:        LICENSE
+Author:              Ozgun Ataman
+Maintainer:          ozataman@gmail.com
+Category:            Web
+Build-type:          Simple
+
+Cabal-version:       >=1.2
+
+Library
+  hs-source-dirs: src
+  
+  Exposed-modules:
+    Snap.Extension.Si18n.Impl
+
+  Other-modules:
+    Snap.Extension.Si18n
+  
+  Build-depends:       
+      base >= 4 && < 5
+    , bytestring >= 0.9
+    , containers >= 0.3
+    , directory
+    , mtl
+    , si18n
+    , snap >= 0.3 && < 0.4
+    , snap-core >= 0.3 && < 0.4
+    , text >= 0.11
+    , transformers
+  
+  extensions: 
+      OverloadedStrings
