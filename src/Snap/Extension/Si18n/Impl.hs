@@ -11,9 +11,12 @@ import           Control.Monad.IO.Class
 import           Control.Monad.Reader
 import           Control.Monad.Trans
 import qualified Data.Map as Map
+import           Data.ByteString (ByteString)
 import           Data.Text (Text)
 import qualified Data.Text as T
+import           Data.Text.Encoding
 import           System.Directory
+import           System.FilePath.Posix
 
 import           Snap.Extension
 import           Snap.Types
@@ -28,7 +31,7 @@ import           Text.Si18n (I18nData)
 -- | 
 data Si18nState = Si18nState
   { si18nData :: I18nData 
-  , si18nDefLocale :: Text 
+  , si18nDefLocale :: ByteString 
   }
 
 
@@ -41,7 +44,7 @@ class HasSi18nState s where
 ------------------------------------------------------------------------------
 si18nStateInitializer :: FilePath 
                       -- ^ Path to directory containing locale files.
-                      -> Text
+                      -> ByteString
                       -- ^ Default locale
                       -> Initializer Si18nState
 si18nStateInitializer fp l = do
@@ -52,7 +55,7 @@ si18nStateInitializer fp l = do
   mkInitializer st
   where
     step a x = do
-      d <- liftIO $ S.loadI18nFile x
+      d <- liftIO $ S.loadI18nFile (fp </> x)
       return $ a `Map.union` d
 
 
@@ -71,4 +74,10 @@ instance HasSi18nState s => MonadSi18n (SnapExtend s) where
   translate l s m = do
     i18n <- fmap si18nData $ asks getSi18nState
     return $ S.t i18n l s m
+
+  translate' l s m = liftM encodeUtf8 $ translate l' s' m'
+    where
+      (l':s':_) = map decodeUtf8 [l, s]
+      m' = map (\(k,v) -> (decodeUtf8 k, decodeUtf8 v)) m
+    
 

@@ -1,5 +1,5 @@
 Name:                snap-extension-si18n
-Version:             0.1
+Version:             0.0.1
 Synopsis:            Simple I18n framework for Snap
 Homepage:            https://github.com/ozataman/snap-extension-si18n
 License:             BSD3
@@ -25,6 +25,7 @@ Library
     , bytestring >= 0.9
     , containers >= 0.3
     , directory
+    , filepath
     , mtl
     , si18n
     , snap >= 0.3 && < 0.4
