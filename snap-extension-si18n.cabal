@@ -28,8 +28,8 @@ Library
     , filepath
     , mtl
     , si18n
-    , snap >= 0.3 && < 0.4
-    , snap-core >= 0.3 && < 0.4
+    , snap >= 0.4 && < 0.5
+    , snap-core >= 0.4 && < 0.5
     , text >= 0.11
     , transformers
   
